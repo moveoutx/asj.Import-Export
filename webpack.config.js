@@ -1,19 +1,29 @@
-
-const path = require('node:path');
+const path = require('path');
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import webpack from 'webpack';
+
 
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
   },
+  experiments: {
+    asyncWebAssembly: true,
+    topLevelAwait: true,
+    outputModule: true
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
+        test: /\.m?js$/,
         use: {
           loader: 'babel-loader',
-        },
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       },
       {
         test: /\.html$/,
